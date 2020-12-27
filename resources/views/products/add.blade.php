@@ -1,16 +1,10 @@
 @extends('layouts.master')
 
 @section('content')
-<h1>Product</h1>
-
-<a href="/productlist" class="btn btn-primary">View</a>
+<h1>Add Product</h1>
 <br/>
 <div class="col-md-4 offset-md-4">
-@if(session()->has('success'))
-    <div class="alert alert-success">{{session()->get('success')}}</div>
-    {{session()->forget('success')}}
-@endif
-<form method="post" action="/product">
+<form method="post" action="{{route('addProduct')}}">
     @csrf
     <label>Name</label>
     <input type="text" class="form-control" name="name" />
@@ -18,9 +12,9 @@
         <li class="list">{{$message}}</li>
     @enderror
 
-    <label>Code</label>
-    <input type="text" class="form-control" name="code"/>
-    @error('code')
+    <label>Price</label>
+    <input type="text" class="form-control" name="price"/>
+    @error('price')
         <li class="list">{{$message}}</li>
     @enderror
     <br/>

@@ -8,54 +8,45 @@ use Illuminate\Http\Request;
 
 class Productcontroller extends Controller
 {
-    public function viewproduct(){
-        return view('product');
-    }
-
-    public function addproduct(Request $req){
-        $this->validate($req,[
-            'name'=>'required',
-            'code'=>'required',
-        ]);
-
-        $product=new Product();
-        $product->name=$req->name;
-        $product->code=$req->code;
-        $product->save();
-        session()->put('success' ,'Successfully added');
-        return view('product');
-    }
-
-    public function listproduct(){
-
+    public function index(){
         $products=Product::all();
-        return view('listproduct',['products'=>$products]);
+        return view('products.index',[
+            'products'=>$products
+        ]);
     }
 
-    public function editproduct($id){
-        $product=Product::find($id);
-        return view('editproduct',['product'=>$product]);
+    public function create(Request $req){
+        return view('products.add');
     }
 
-    public function updateproduct($id,Request $req){
-        $product=Product::find($id);
-        $product->name=$req->name;
-        $product->code=$req->code;
-        $product->save();
-        session()->put('editproduct','Successfully Edited');
-        return redirect('productlist');
+    public function store(Request $request, Product $product){
+        // $this->validate($request,[
+        //     'name'=>'required',
+        //     'price' =>'required'
+        // ]);
+
+        Product::create($request->only(['name','price']));
+        return redirect('products');
+    }
+
+    public function edit(Product $product){
+        return view('products.edit',[
+            'product'=>$product
+        ]);
+    }
+
+    public function update(Request $request, Product $product){
+        $this->validate($request, [
+            'name' => 'required',
+            'price' => 'required'
+        ]);
+        $product->update($request->only(['name', 'price']));
+        return redirect('products');
 
     }
 
-    public function deleteproduct($id){
-        $product=Product::find($id);
+    public function destroy(Product $product){
         $product->delete();
-        session()->put('deleteproduct','Successfully deleted');
-        return redirect('productlist');
-    }
-
-    public function total(){
-        $datas = Product::all();
-        return view('productcalculation', ['datas' => $datas]);
+        return redirect('products');
     }
 }

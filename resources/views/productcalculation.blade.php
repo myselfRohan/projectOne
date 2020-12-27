@@ -32,10 +32,6 @@
                 <td>
                     <input type="number" class="form-control input quantity" >
                 </td>
-                
-                <td>
-                    <input type="number" class="form-control input total" >
-                </td>
 
                 <td>
                     <a class="btn btn-danger delete">X</a>

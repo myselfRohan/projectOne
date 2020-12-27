@@ -13,7 +13,7 @@
     <p class="lead">This is a CRUD PROJECT</p>
     <hr class="my-4">
     <p><strong>Can Create Read Update and Delete a Product</strong></p>
-    <a href="/product" class="btn btn-success">Product </a>
+    <a href="{{route('products')}}" class="btn btn-success">Product </a>
     <a href="/productcategory" class="btn btn-primary">Product Category</a>
     <a href="/productcalculate" class="btn btn-primary">Product Calculation</a>
     <a href="/unit" class="btn btn-success">Unit</a>
