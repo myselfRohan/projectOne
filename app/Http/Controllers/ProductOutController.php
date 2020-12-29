@@ -49,4 +49,48 @@ class ProductOutController extends Controller
     public function getData($id){   //for getting the data through ajax
         return Product::find($id);
     }
+
+    public function edit($id){
+        $productOut = ProductOut::find($id);
+        return view('products_out.edit',[
+            'productOut' => $productOut
+        ]);
+    }
+
+    public function update(Request $request, $id){
+        $datas = [
+            'quantity' => $request->quantity,
+            'out_at' => $request->out_at
+        ];
+        $productOut = ProductOut::find($id);
+        $productOut->update($datas);
+        return redirect()->route('productsOut');
+    }
+
+    public function destroy(ProductOut $productOut){
+        $productOut->delete();
+        return redirect()->route('productsOut');
+    }
+
+    public function show($id) {
+        $query = "SELECT p.name,sum(a.intotal) AS instotal  FROM products AS p
+                  JOIN 
+                    (
+                     SELECT  pin.product_id,IFNULL(SUM(pin.quantity),0) AS intotal 
+                     FROM products_in AS pin
+                     GROUP BY pin.product_id
+                     UNION all
+                     SELECT  pout.product_id,IFNULL(-pout.quantity,0) AS intotal 
+                     FROM products_out AS pout
+        
+                     ) AS a
+                    ON p.id=a.product_id
+                WHERE p.id = {$id};";
+        
+        $data = DB::select(
+            DB::raw($query)
+        );
+
+        return $data ;
+    }
 }

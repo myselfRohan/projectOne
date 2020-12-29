@@ -7,19 +7,9 @@ use App\Http\Controllers\Productcontroller;
 
 use App\Http\Controllers\ProductInController;
 use App\Http\Controllers\ProductOutController;
+use App\Http\Controllers\FinalReportController;
 use App\Http\Controllers\Productcategorycontroller;
 use App\Http\Controllers\ProductCalculateController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,16 +29,31 @@ Route::get('/productsin' , [ProductInController::class, 'index'])->name('product
 Route::get('/productsin/create', [ProductInController::class, 'create'])->name('createProductsIn');
 Route::post('/productsin', [ProductInController::class, 'store'])->name('addProductsIn');
 route::get('/getdata/{id}', [ProductInController::class, 'getData']);
+Route::get('productsin/{productIn}/edit',[ProductIncontroller::class,'edit'])->name('editProductIn');
+Route::put('productsin/{productIn}',[ProductIncontroller::class,'update'])->name('updateProductIn');
+Route::delete('productsin/{productIn}',[ProductIncontroller::class,'destroy'])->name('deleteProductIn');
+
+Route::get('/searchProducts', [ProductInController::class, 'search'])->name('search');
 
 //route for productsout
 Route::get('/productsout' , [ProductOutController::class, 'index'])->name('productsOut');
 Route::get('/productsout/create', [ProductOutController::class, 'create'])->name('createProductsOut');
 Route::post('/productsout', [ProductOutController::class, 'store'])->name('addProductsOut');
 route::get('/getdata/{id}', [ProductOutController::class, 'getData']);
+Route::get('productsout/{productOut}/edit',[ProductOutcontroller::class,'edit'])->name('editProductOut');
+Route::put('productsout/{productOut}',[ProductOutcontroller::class,'update'])->name('updateProductOut');
+Route::delete('productsout/{productOut}',[ProductOutcontroller::class,'destroy'])->name('deleteProductOut');
+
+
+Route::get('/data/{id}', [ProductOutController::class, 'show']);
+
+//Route for final report
+Route::get('/finalreport', [FinalReportController::class, 'index'])->name('finalReport');
+
+
 
 
 // Route for productcategory
-
 Route::get('/productcategory',[Productcategorycontroller::class,'viewproductcategory']);
 Route::post('/productcategory',[Productcategorycontroller::class,'addproductcategory']);
 Route::get('/productcategorylist',[Productcategorycontroller::class,'listproductcategory']);

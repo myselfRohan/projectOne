@@ -52,4 +52,59 @@ class ProductInController extends Controller
         return Product::find($id);
     }
 
+    public function show($id){
+        return ProductIn::find($id);
+    }
+    
+    public function edit($id) {
+        $productIn = ProductIn::find($id);
+        return view('products_in.edit', [
+            'productIn' => $productIn
+        ]);
+    }
+
+    public function update(Request $request, $id){
+        // dd($request->all());
+        $datas = [
+            'quantity' => $request->quantity,
+            'in_at' => $request->in_at
+        ];
+        // dd($datas);
+        $productIn = ProductIn::find($id);
+        $productIn->update($datas);
+        return redirect()->route('productsIn');
+    }
+
+    public function destroy(ProductIn $productIn){
+        $productIn->delete();
+        return redirect()->route('productsIn');
+    }
+
+    //for searching the products
+    public function search(Request $request){
+        $products = Product::all();
+        // $searchResults = DB::table('products')
+        // ->join("products_in","products_in.product_id","=","products.id")
+        // ->select("products_in.id","name","price","quantity","in_at")
+        // // ->where("name","Like", "%{$request->inputData}%")
+        // // ->where("in_at","=", "{$request->searchDate}")
+        // ->whereRaw("in_at = "+$request->searchDate+" OR name LIKE "+$request->inputData)
+        $query = "SELECT pin.id,name,quantity,price,in_at
+        FROM products AS p
+        JOIN products_in AS pin ON p.id=pin.product_id
+        WHERE p.name='%{$request->inputData}%' 
+        OR in_at = '{$request->searchDate}';";
+
+
+        $searchResults = DB::select(
+            DB::raw($query)
+        );
+
+        // dd($searchResults);
+        
+        return view('products_in.result', [
+            'results' => $searchResults
+        ]);
+    }
+
 }

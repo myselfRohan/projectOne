@@ -9,6 +9,7 @@
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
             <th scope="col">Product Out Date</th>
+            <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -25,6 +26,14 @@
                     <td>{{$item->price}}</td>
                     <td>{{$item->quantity}}</td>
                     <td>{{$item->out_at}}</td>
+                    <td><a href="{{route('editProductOut',$item->id)}}" class="btn btn-primary">Edit</a>
+                        <form action="{{route('deleteProductOut', $item->id)}}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="form-control btn btn-danger col-md-5 pr-4 mt-1">Delete</button>
+    
+                        </form>
+                    </td>
                 </tr>
                 
             @endforeach

@@ -28,11 +28,11 @@
                     </td>
                     
                     <td>
-                        <input type="number" name='price[]' class="form-control inputPrice" >
+                        <input type="number" name='price[]' class="form-control input inputPrice" >
                     </td>
     
                     <td>
-                        <input type="number" name='quantity[]' class="form-control inputQuantity" >
+                        <input type="number" name='quantity[]' class="form-control input inputQuantity" >
                     </td>
     
                     <td>
@@ -82,7 +82,7 @@
                 method: "GET",
                 url: "/getdata/"+id,                           
                 success: function(response){                    
-                    // console.log(response)
+                    console.log(response)
                     // $('.inputPrice').val(response.price);
                     b.find('.inputPrice').val(response.price);
                 },

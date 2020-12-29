@@ -21,7 +21,7 @@
             @php
                 $i=0;
             @endphp
-            @foreach ($productsInList as $item)
+            @foreach ($results as $item)
                 {{-- @php
                     dd($item);
                 @endphp --}}
